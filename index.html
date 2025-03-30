@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgePro Quiz Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-buttons .btn {
+            margin-left: 10px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        /* Subjects Section */
+        .subjects {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: #777;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .subject-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .subject-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .subject-content {
+            padding: 20px;
+        }
+
+        .subject-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .subject-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .subject-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quiz-header h2 {
+            color: var(--dark-color);
+        }
+
+        .quiz-progress {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+        }
+
+        .option.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .option.correct {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .option.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Results Section */
+        .results-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 2rem auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .results-container h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .score-details {
+            margin: 20px 0;
+        }
+
+        .score-details p {
+            margin: 10px 0;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .excellent {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--secondary-color);
+        }
+
+        .good {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--primary-color);
+        }
+
+        .average {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: var(--warning-color);
+        }
+
+        .poor {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--danger-color);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 10px;
+            }
+
+            .auth-buttons {
+                margin-top: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subject-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>KnowledgePro</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#subjects">Subjects</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Test Your Knowledge Across Diverse Subjects</h1>
+            <p>Challenge yourself with our comprehensive quiz platform covering science, technology, management, and more. Perfect for students, professionals, and lifelong learners.</p>
+            <a href="#subjects" class="btn btn-secondary">Explore Subjects</a>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section class="subjects" id="subjects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Quiz Subjects</h2>
+                <p>Select from a wide range of subjects to test your knowledge and improve your skills</p>
+            </div>
+            <div class="subject-grid">
+                <!-- Subject Cards -->
+                <div class="subject-card" data-subject="basic-science">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Basic Science">
+                    <div class="subject-content">
+                        <h3>Basic Science</h3>
+                        <p>Fundamental concepts in physics, biology, and general scientific principles.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 50 Questions</span>
+                            <span><i class="fas fa-clock"></i> 30 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="basic-science">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="chemistry">
+                    <img src="https://images.unsplash.com/photo-1554475901-4538ddfbccc2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chemistry">
+                    <div class="subject-content">
+                        <h3>Chemistry</h3>
+                        <p>Explore atomic structure, chemical reactions, and organic chemistry.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 45 Questions</span>
+                            <span><i class="fas fa-clock"></i> 35 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="chemistry">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="environmental-studies">
+                    <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Environmental Studies">
+                    <div class="subject-content">
+                        <h3>Environmental Studies</h3>
+                        <p>Learn about ecosystems, sustainability, and environmental policies.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 40 Questions</span>
+                            <span><i class="fas fa-clock"></i> 25 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="environmental-studies">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="advanced-java">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Advanced Java">
+                    <div class="subject-content">
+                        <h3>Advanced Java Programming</h3>
+                        <p>Advanced concepts in Java including multithreading, collections, and JDBC.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 60 Questions</span>
+                            <span><i class="fas fa-clock"></i> 45 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="advanced-java">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="mobile-development">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mobile Development">
+                    <div class="subject-content">
+                        <h3>Mobile Application Development</h3>
+                        <p>Android and iOS development, React Native, Flutter, and mobile UI/UX.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 55 Questions</span>
+                            <span><i class="fas fa-clock"></i> 40 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="mobile-development">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="computer-network">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Computer Network">
+                    <div class="subject-content">
+                        <h3>Computer Network</h3>
+                        <p>Networking fundamentals, protocols, security, and infrastructure.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 50 Questions</span>
+                            <span><i class="fas fa-clock"></i> 35 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="computer-network">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="management">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Management">
+                    <div class="subject-content">
+                        <h3>Management</h3>
+                        <p>Principles of management, leadership, and organizational behavior.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 45 Questions</span>
+                            <span><i class="fas fa-clock"></i> 30 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="management">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="subject-card" data-subject="javascript">
+                    <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="JavaScript">
+                    <div class="subject-content">
+                        <h3>JavaScript</h3>
+                        <p>Core JavaScript concepts, ES6+, DOM manipulation, and frameworks.</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-question-circle"></i> 60 Questions</span>
+                            <span><i class="fas fa-clock"></i> 45 mins</span>
+                        </div>
+                        <button class="btn start-quiz" data-subject="javascript">Start Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Container (Hidden by default) -->
+    <div class="container">
+        <div class="quiz-container" id="quiz-container">
+            <div class="quiz-header">
+                <h2 id="quiz-subject">Subject Quiz</h2>
+                <div class="quiz-progress" id="quiz-progress">Question 1 of 10</div>
+            </div>
+            <div class="question">
+                <h3 id="question-text">Question text goes here</h3>
+                <div class="options" id="options-container">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+            </div>
+            <div class="quiz-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Previous</button>
+                <button class="btn" id="next-btn">Next</button>
+            </div>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <h2>Quiz Results</h2>
+            <div class="score" id="score">0%</div>
+            <div class="score-details">
+                <p>Correct Answers: <span id="correct-answers">0</span></p>
+                <p>Wrong Answers: <span id="wrong-answers">0</span></p>
+                <p>Skipped Questions: <span id="skipped-questions">0</span></p>
+            </div>
+            <div class="feedback" id="feedback">
+                Your performance feedback will appear here
+            </div>
+            <button class="btn" id="retry-btn">Retry Quiz</button>
+            <button class="btn btn-secondary" id="back-to-subjects">Back to Subjects</button>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our Platform</h2>
+                <p>Discover the features that make our quiz platform stand out from the rest</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Comprehensive Subjects</h3>
+                    <p>Covering a wide range of academic and professional subjects to suit all learners.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Performance Analytics</h3>
+                    <p>Detailed reports and analytics to track your progress and identify areas for improvement.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Fully responsive design that works perfectly on all devices, from desktop to mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Timed Quizzes</h3>
+                    <p>Simulate real exam conditions with our timed quiz feature to improve your speed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Diverse Question Types</h3>
+                    <p>Multiple choice, true/false, and scenario-based questions to test different skills.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Achievements & Badges</h3>
+                    <p>Earn rewards and recognition as you progress through different difficulty levels.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>KnowledgePro</h3>
+                    <p>Empowering learners through interactive quizzes and comprehensive knowledge assessment.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Subjects</h3>
+                    <ul>
+                        <li><a href="#" data-subject="basic-science">Basic Science</a></li>
+                        <li><a href="#" data-subject="chemistry">Chemistry</a></li>
+                        <li><a href="#" data-subject="environmental-studies">Environmental Studies</a></li>
+                        <li><a href="#" data-subject="advanced-java">Advanced Java</a></li>
+                        <li><a href="#" data-subject="mobile-development">Mobile Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Learning City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@knowledgepro.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 KnowledgePro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Quiz Data for All Subjects
+        const quizData = {
+            'basic-science': [
+                {
+                    question: "What is the SI unit of force?",
+                    options: ["Joule", "Newton", "Watt", "Pascal"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is NOT a state of matter?",
+                    options: ["Solid", "Liquid", "Gas", "Energy"],
+                    answer: 3
+                },
+                {
+                    question: "What is the chemical symbol for gold?",
+                    options: ["Go", "Gd", "Au", "Ag"],
+                    answer: 2
+                },
+                {
+                    question: "Which planet is known as the Red Planet?",
+                    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                    answer: 1
+                },
+                {
+                    question: "What is the powerhouse of the cell?",
+                    options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi Apparatus"],
+                    answer: 1
+                }
+            ],
+            'chemistry': [
+                {
+                    question: "What is the pH value of pure water?",
+                    options: ["5", "7", "9", "12"],
+                    answer: 1
+                },
+                {
+                    question: "Which element has the atomic number 1?",
+                    options: ["Helium", "Hydrogen", "Oxygen", "Carbon"],
+                    answer: 1
+                },
+                {
+                    question: "What type of reaction is photosynthesis?",
+                    options: ["Exothermic", "Endothermic", "Neutralization", "Redox"],
+                    answer: 1
+                },
+                {
+                    question: "Which gas is most abundant in Earth's atmosphere?",
+                    options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Argon"],
+                    answer: 2
+                },
+                {
+                    question: "What is the chemical formula for table salt?",
+                    options: ["NaCl", "H2O", "CO2", "CH4"],
+                    answer: 0
+                }
+            ],
+            'environmental-studies': [
+                {
+                    question: "What is the primary cause of global warming?",
+                    options: ["Increased solar activity", "Greenhouse gas emissions", "Volcanic eruptions", "Ocean currents"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is a renewable energy source?",
+                    options: ["Coal", "Natural gas", "Solar power", "Nuclear power"],
+                    answer: 2
+                },
+                {
+                    question: "What is the main purpose of the Kyoto Protocol?",
+                    options: ["To protect endangered species", "To reduce greenhouse gas emissions", "To promote sustainable agriculture", "To regulate international trade"],
+                    answer: 1
+                },
+                {
+                    question: "Which layer of the atmosphere contains the ozone layer?",
+                    options: ["Troposphere", "Stratosphere", "Mesosphere", "Thermosphere"],
+                    answer: 1
+                },
+                {
+                    question: "What is the term for the variety of life in an ecosystem?",
+                    options: ["Sustainability", "Biodiversity", "Ecology", "Conservation"],
+                    answer: 1
+                }
+            ],
+            'advanced-java': [
+                {
+                    question: "Which collection implements a dynamic array in Java?",
+                    options: ["HashSet", "TreeMap", "ArrayList", "LinkedList"],
+                    answer: 2
+                },
+                {
+                    question: "What is the default value of a boolean variable in Java?",
+                    options: ["true", "false", "null", "0"],
+                    answer: 1
+                },
+                {
+                    question: "Which keyword is used to prevent method overriding?",
+                    options: ["static", "final", "private", "volatile"],
+                    answer: 1
+                },
+                {
+                    question: "What does JVM stand for?",
+                    options: ["Java Virtual Machine", "Java Variable Method", "Just Very Machine", "Java Verified Module"],
+                    answer: 0
+                },
+                {
+                    question: "Which interface should be implemented for object comparison?",
+                    options: ["Runnable", "Serializable", "Comparable", "Cloneable"],
+                    answer: 2
+                }
+            ],
+            'mobile-development': [
+                {
+                    question: "Which language is primarily used for Android development?",
+                    options: ["Swift", "Kotlin", "C#", "Python"],
+                    answer: 1
+                },
+                {
+                    question: "What is React Native?",
+                    options: ["A JavaScript framework", "A testing tool", "A database", "An IDE"],
+                    answer: 0
+                },
+                {
+                    question: "Which component is used for navigation in React Native?",
+                    options: ["View", "Navigator", "Text", "Button"],
+                    answer: 1
+                },
+                {
+                    question: "What does API stand for in mobile development?",
+                    options: ["Application Programming Interface", "Automated Program Integration", "Advanced Programming Instruction", "Application Process Interface"],
+                    answer: 0
+                },
+                {
+                    question: "Which tool is used for iOS development?",
+                    options: ["Android Studio", "Xcode", "Visual Studio", "Eclipse"],
+                    answer: 1
+                }
+            ],
+            'computer-network': [
+                {
+                    question: "What does IP stand for?",
+                    options: ["Internet Protocol", "Internal Process", "Interconnected Platform", "Integrated Program"],
+                    answer: 0
+                },
+                {
+                    question: "Which protocol is used for secure web browsing?",
+                    options: ["HTTP", "FTP", "HTTPS", "SMTP"],
+                    answer: 2
+                },
+                {
+                    question: "What is the purpose of a router?",
+                    options: ["To connect multiple networks", "To store data", "To process information", "To display content"],
+                    answer: 0
+                },
+                {
+                    question: "Which layer of the OSI model deals with routing?",
+                    options: ["Physical", "Data Link", "Network", "Transport"],
+                    answer: 2
+                },
+                {
+                    question: "What is the most common Wi-Fi standard?",
+                    options: ["802.11ac", "802.11b", "802.11g", "802.11n"],
+                    answer: 0
+                }
+            ],
+            'management': [
+                {
+                    question: "What is SWOT analysis used for?",
+                    options: ["Financial reporting", "Strategic planning", "Employee evaluation", "Product development"],
+                    answer: 1
+                },
+                {
+                    question: "Which management theorist proposed the Hierarchy of Needs?",
+                    options: ["Frederick Taylor", "Abraham Maslow", "Peter Drucker", "Henri Fayol"],
+                    answer: 1
+                },
+                {
+                    question: "What does KPI stand for?",
+                    options: ["Key Performance Indicator", "Knowledge Process Integration", "Key Process Improvement", "Knowledge Performance Index"],
+                    answer:0
+},
+{
+question: "Which leadership style involves making decisions without input from others?",
+options: ["Democratic", "Laissez-faire", "Autocratic", "Transformational"],
+answer: 2
+},
+{
+question: "What is the first step in the decision-making process?",
+options: ["Evaluate alternatives", "Identify the problem", "Implement the solution", "Gather information"],
+answer: 1
+}
+],
+'javascript': [
+{
+question: "Which keyword is used to declare a variable in JavaScript?",
+options: ["var", "let", "const", "All of the above"],
+answer: 3
+},
+{
+question: "What will 'typeof null' return in JavaScript?",
+options: ["'null'", "'undefined'", "'object'", "'number'"],
+answer: 2
+},
+{
+question: "Which method adds one or more elements to the end of an array?",
+options: ["push()", "pop()", "shift()", "unshift()"],
+answer: 0
+},
+{
+question: "What does the '===' operator check for?",
+options: ["Value equality", "Type equality", "Both value and type equality", "Reference equality"],
+answer: 2
+},
+{
+question: "Which of these is NOT a JavaScript framework?",
+options: ["React", "Angular", "Vue", "Django"],
+answer: 3
+}
+]
+};
+
+    // Quiz Variables
+    let currentSubject = '';
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+    let quizStarted = false;
+
+    // DOM Elements
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsContainer = document.getElementById('results-container');
+    const subjectCards = document.querySelectorAll('.subject-card');
+    const startQuizButtons = document.querySelectorAll('.start-quiz');
+    const quizSubject = document.getElementById('quiz-subject');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const quizProgress = document.getElementById('quiz-progress');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const retryBtn = document.getElementById('retry-btn');
+    const backToSubjectsBtn = document.getElementById('back-to-subjects');
+    const scoreElement = document.getElementById('score');
+    const correctAnswersElement = document.getElementById('correct-answers');
+    const wrongAnswersElement = document.getElementById('wrong-answers');
+    const skippedQuestionsElement = document.getElementById('skipped-questions');
+    const feedbackElement = document.getElementById('feedback');
+
+    // Event Listeners
+    startQuizButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            currentSubject = e.target.getAttribute('data-subject');
+            startQuiz(currentSubject);
+        });
+    });
+
+    document.querySelectorAll('.footer-column a[data-subject]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentSubject = e.target.getAttribute('data-subject');
+            startQuiz(currentSubject);
+            window.scrollTo({ top: quizContainer.offsetTop, behavior: 'smooth' });
+        });
+    });
+
+    prevBtn.addEventListener('click', showPreviousQuestion);
+    nextBtn.addEventListener('click', showNextQuestion);
+    retryBtn.addEventListener('click', retryQuiz);
+    backToSubjectsBtn.addEventListener('click', backToSubjects);
+
+    // Quiz Functions
+    function startQuiz(subject) {
+        currentSubject = subject;
+        currentQuestion = 0;
+        score = 0;
+        userAnswers = Array(quizData[subject].length).fill(null);
+        quizStarted = true;
+        
+        // Update UI
+        quizSubject.textContent = document.querySelector(`.subject-card[data-subject="${subject}"] h3`).textContent;
+        quizContainer.style.display = 'block';
+        resultsContainer.style.display = 'none';
+        
+        // Scroll to quiz
+        window.scrollTo({ top: quizContainer.offsetTop, behavior: 'smooth' });
+        
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const quiz = quizData[currentSubject];
+        const question = quiz[currentQuestion];
+        
+        // Update progress
+        quizProgress.textContent = `Question ${currentQuestion + 1} of ${quiz.length}`;
+        
+        // Update question text
+        questionText.textContent = question.question;
+        
+        // Clear previous options
+        optionsContainer.innerHTML = '';
+        
+        // Add new options
+        question.options.forEach((option, index) => {
+            const optionElement = document.createElement('div');
+            optionElement.classList.add('option');
+            
+            // Check if this option was previously selected
+            if (userAnswers[currentQuestion] === index) {
+                optionElement.classList.add('selected');
+            }
+            
+            optionElement.textContent = option;
+            optionElement.addEventListener('click', () => selectOption(index));
+            optionsContainer.appendChild(optionElement);
+        });
+        
+        // Update button states
+        prevBtn.disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quiz.length - 1) {
+            nextBtn.textContent = 'Finish';
+        } else {
+            nextBtn.textContent = 'Next';
+        }
+    }
+
+    function selectOption(optionIndex) {
+        // Remove selected class from all options
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => option.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        options[optionIndex].classList.add('selected');
+        
+        // Store user's answer
+        userAnswers[currentQuestion] = optionIndex;
+    }
+
+    function showNextQuestion() {
+        const quiz = quizData[currentSubject];
+        
+        // If on last question, show results
+        if (currentQuestion === quiz.length - 1) {
+            showResults();
+            return;
+        }
+        
+        // Move to next question
+        currentQuestion++;
+        showQuestion();
+    }
+
+    function showPreviousQuestion() {
+        // Move to previous question
+        currentQuestion--;
+        showQuestion();
+    }
+
+    function showResults() {
+        const quiz = quizData[currentSubject];
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+        
+        // Calculate score
+        userAnswers.forEach((answer, index) => {
+            if (answer === null) {
+                skipped++;
+            } else if (answer === quiz[index].answer) {
+                correct++;
+            } else {
+                wrong++;
+            }
+        });
+        
+        score = Math.round((correct / quiz.length) * 100);
+        
+        // Update results UI
+        scoreElement.textContent = `${score}%`;
+        correctAnswersElement.textContent = correct;
+        wrongAnswersElement.textContent = wrong;
+        skippedQuestionsElement.textContent = skipped;
+        
+        // Set feedback based on score
+        feedbackElement.className = 'feedback';
+        if (score >= 80) {
+            feedbackElement.textContent = 'Excellent! You have a strong understanding of this subject.';
+            feedbackElement.classList.add('excellent');
+        } else if (score >= 60) {
+            feedbackElement.textContent = 'Good job! You have a solid foundation but there\'s room for improvement.';
+            feedbackElement.classList.add('good');
+        } else if (score >= 40) {
+            feedbackElement.textContent = 'Not bad! Review the material and try again to improve your score.';
+            feedbackElement.classList.add('average');
+        } else {
+            feedbackElement.textContent = 'Keep practicing! Consider reviewing the fundamentals before trying again.';
+            feedbackElement.classList.add('poor');
+        }
+        
+        // Show results and hide quiz
+        quizContainer.style.display = 'none';
+        resultsContainer.style.display = 'block';
+        
+        // Scroll to results
+        window.scrollTo({ top: resultsContainer.offsetTop, behavior: 'smooth' });
+    }
+
+    function retryQuiz() {
+        startQuiz(currentSubject);
+    }
+
+    function backToSubjects() {
+        quizContainer.style.display = 'none';
+        resultsContainer.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
